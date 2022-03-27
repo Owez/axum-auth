@@ -1,4 +1,4 @@
-# Axum Authentication
+# Axum Auth
 
 Simple utility library for high-level basic/bearer auth in axum
 
