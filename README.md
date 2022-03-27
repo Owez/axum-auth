@@ -2,15 +2,6 @@
 
 Simple utility library for high-level basic/bearer auth in axum
 
-## Installation
-
-Simply place the following inside of your `Cargo.toml` file:
-
-```toml
-[dependencies]
-axum-auth = "0.1"
-```
-
 ## Usage
 
 Bearer Authentication:
@@ -39,7 +30,16 @@ fn handler(AuthBasic((id, password)): AuthBasic) -> String {
 }
 ```
 
-Check out the [crate documentation](https://docs.rs/axum-auth) for more in-depth information into how both of these authentication methods work!
+Check out the [crate documentation](https://docs.rs/axum-auth) for more in-depth information into how both of these methods work!
+
+## Installation
+
+Simply place the following inside of your `Cargo.toml` file:
+
+```toml
+[dependencies]
+axum-auth = "0.1"
+```
 
 ## Security
 
