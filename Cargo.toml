@@ -10,3 +10,4 @@ edition = "2021"
 [dependencies]
 axum = "0.4"
 http = "0.2"
+base64 = "0.13"

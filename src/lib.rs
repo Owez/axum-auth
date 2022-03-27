@@ -38,7 +38,59 @@ use http::{header::AUTHORIZATION, StatusCode};
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct AuthBasic(pub (String, Option<String>));
 
-// TODO: impl FromRequest
+#[async_trait]
+impl<B> FromRequest<B> for AuthBasic
+where
+    B: Send,
+{
+    type Rejection = (StatusCode, &'static str);
+
+    async fn from_request(req: &mut RequestParts<B>) -> std::result::Result<Self, Self::Rejection> {
+        // Get authorisation header
+        let authorisation = req
+            .headers()
+            .and_then(|headers| headers.get(AUTHORIZATION))
+            .ok_or((StatusCode::BAD_REQUEST, "`Authorization` header is missing"))?
+            .to_str()
+            .map_err(|_| {
+                (
+                    StatusCode::BAD_REQUEST,
+                    "`Authorization` header contains invalid characters",
+                )
+            })?;
+
+        // Check that its a well-formed basic auth then decode and return
+        let split = authorisation.split_once(' ');
+        match split {
+            Some((name, contents)) if name == "Basic" => decode_basic(contents),
+            _ => Err((
+                StatusCode::BAD_REQUEST,
+                "`Authorization` header must be for basic authentication",
+            )),
+        }
+    }
+}
+
+/// Decodes basic auth, returning the full tuple if present
+fn decode_basic(input: &str) -> Result<AuthBasic, (StatusCode, &'static str)> {
+    const ERR: (StatusCode, &'static str) = (
+        StatusCode::BAD_REQUEST,
+        "`Authorization` header's basic authentication was improperly encoded",
+    );
+
+    // Decode from base64 into a string
+    let decoded = base64::decode(input).map_err(|_| ERR)?;
+    let decoded = String::from_utf8(decoded).map_err(|_| ERR)?;
+
+    // Return depending on if password is present
+    Ok(AuthBasic(
+        if let Some((id, password)) = decoded.split_once(':') {
+            (id.to_string(), Some(password.to_string()))
+        } else {
+            (decoded, None)
+        },
+    ))
+}
 
 /// Bearer token extractor which contains the innards of a bearer header as a string
 ///
@@ -98,9 +150,7 @@ where
         // Check that its a well-formed bearer and return
         let split = authorisation.split_once(' ');
         match split {
-            Some((bearer, contents)) if bearer == "Bearer" => {
-                Ok(Self(contents.to_string()))
-            }
+            Some((name, contents)) if name == "Bearer" => Ok(Self(contents.to_string())),
             _ => Err((
                 StatusCode::BAD_REQUEST,
                 "`Authorization` header must be a bearer token",
