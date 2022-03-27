@@ -1,12 +1,12 @@
 //! Simple utility library for high-level basic/bearer auth in [axum]
-//! 
+//!
 //! # Usage
-//! 
+//!
 //! Check out the following structures for more item-level documentation:
-//! 
+//!
 //! - Basic auth: [AuthBasic]
 //! - Bearer auth: [AuthBearer]
-//! 
+//!
 //! That's all there is to it!
 
 use axum::async_trait;
@@ -14,11 +14,11 @@ use axum::extract::{FromRequest, RequestParts};
 use http::{header::AUTHORIZATION, StatusCode};
 
 /// Basic authentication extractor, containing an identifier as well as an optional password
-/// 
+///
 /// # Example
-/// 
+///
 /// Though this structure can be used like any other [axum] extractor, we recommend this pattern:
-/// 
+///
 /// ```no_run
 /// /// Handler for a typical [axum] route, takes a `token` and returns it
 /// fn handler(AuthBasic((id, password)): AuthBasic) -> String {
@@ -29,14 +29,14 @@ use http::{header::AUTHORIZATION, StatusCode};
 ///     }
 /// }
 /// ```
-/// 
+///
 /// # Errors
-/// 
+///
 /// This extractor will give off a few different errors depending on what when wrong with a request's header. These errors include:
-/// 
+///
 /// - COMING SOON
 #[derive(Debug, PartialEq, Eq, Clone)]
-pub struct AuthBasic((String,Option<String>));
+pub struct AuthBasic(pub (String, Option<String>));
 
 // TODO: impl FromRequest
 
@@ -72,7 +72,7 @@ pub struct AuthBasic((String,Option<String>));
 /// `Authorization` header must be a bearer token
 /// ```
 #[derive(Debug, PartialEq, Eq, Clone)]
-pub struct AuthBearer(String);
+pub struct AuthBearer(pub String);
 
 #[async_trait]
 impl<B> FromRequest<B> for AuthBearer
