@@ -98,7 +98,7 @@ where
         // Check that its a well-formed bearer and return
         let split = authorisation.split_once(' ');
         match split {
-            Some((bearer, contents)) if bearer == "Bearer" && contents.len() == 44 => {
+            Some((bearer, contents)) if bearer == "Bearer" => {
                 Ok(Self(contents.to_string()))
             }
             _ => Err((
