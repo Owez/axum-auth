@@ -46,7 +46,7 @@ axum-auth = "0.1"
 Some essential security considerations to take into account are the following:
 
 - This crate has not been audited by any security professionals. If you are willing to do or have already done an audit on this crate, please create an issue as it would help out enormously! 😊
-- This crate purposefully does not limit the maximum length of http basic auth headers arriving so please ensure your webserver configurations are set properly.
+- This crate purposefully does not limit the maximum length of headers arriving so please ensure your webserver configurations are set properly.
 
 ## Licensing
 
