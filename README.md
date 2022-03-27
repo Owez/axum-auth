@@ -1,6 +1,6 @@
 # Axum Auth
 
-Simple utility library for high-level basic/bearer auth in axum
+High-level [http auth](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication) extractors for [axum](https://github.com/tokio-rs/axum)
 
 ## Usage
 
