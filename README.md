@@ -10,7 +10,7 @@ Bearer Authentication:
 use axum_auth::AuthBearer;
  
 /// Handler for a typical axum route, takes a `token` and returns it
-fn handler(AuthBearer(token): AuthBearer) -> String {
+async fn handler(AuthBearer(token): AuthBearer) -> String {
     format!("Found a bearer token: {}", token)
 }
 ```
@@ -21,7 +21,7 @@ Basic Authentication:
 use axum_auth::AuthBasic;
  
 /// Handler for a typical axum route, takes a `token` and returns it
-fn handler(AuthBasic((id, password)): AuthBasic) -> String {
+async fn handler(AuthBasic((id, password)): AuthBasic) -> String {
     if let Some(password) = password {
         format!("User '{}' with password '{}'", id, password)
     } else {
