@@ -1,0 +1,12 @@
+[package]
+name = "axum-auth"
+description = "Simple utility library for high-level basic/bearer auth in axum"
+version = "0.1.0"
+readme = "README.md"
+license = "MIT OR Apache-2.0"
+authors = ["Owen Griffiths <root@ogriffiths.com>"]
+edition = "2021"
+
+[dependencies]
+axum = "0.4"
+http = "0.2"
