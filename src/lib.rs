@@ -20,7 +20,7 @@ use http::{header::AUTHORIZATION, StatusCode};
 /// Though this structure can be used like any other [axum] extractor, we recommend this pattern:
 ///
 /// ```no_run
-/// /// Handler for a typical [axum] route, takes a `token` and returns it
+/// /// Takes basic auth details and shows a message
 /// async fn handler(AuthBasic((id, password)): AuthBasic) -> String {
 ///     if let Some(password) = password {
 ///         format!("User '{}' with password '{}'", id, password)
