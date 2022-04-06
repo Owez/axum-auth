@@ -49,7 +49,7 @@ where
         // Get authorisation header
         let authorisation = req
             .headers()
-            .and_then(|headers| headers.get(AUTHORIZATION))
+            .get(AUTHORIZATION)
             .ok_or((StatusCode::BAD_REQUEST, "`Authorization` header is missing"))?
             .to_str()
             .map_err(|_| {
@@ -137,7 +137,7 @@ where
         // Get authorisation header
         let authorisation = req
             .headers()
-            .and_then(|headers| headers.get(AUTHORIZATION))
+            .get(AUTHORIZATION)
             .ok_or((StatusCode::BAD_REQUEST, "`Authorization` header is missing"))?
             .to_str()
             .map_err(|_| {

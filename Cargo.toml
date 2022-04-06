@@ -8,6 +8,6 @@ authors = ["Owen Griffiths <root@ogriffiths.com>"]
 edition = "2021"
 
 [dependencies]
-axum = "0.4"
+axum = "0.5"
 http = "0.2"
 base64 = "0.13"
