@@ -34,11 +34,11 @@ Check out the [crate documentation](https://docs.rs/axum-auth) for more in-depth
 
 ## Installation
 
-Simply place the following inside of your `Cargo.toml` file:
+Simply place the following inside of your `Cargo.toml` file for Axum 0.5:
 
 ```toml
 [dependencies]
-axum-auth = "0.1"
+axum-auth = "0.2"
 ```
 
 ## Security
