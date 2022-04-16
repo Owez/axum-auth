@@ -1,13 +1,13 @@
 [package]
 name = "axum-auth"
 description = "High-level http auth extractors for axum"
-version = "0.1.1"
+version = "0.2.0"
 readme = "README.md"
 license = "MIT OR Apache-2.0"
 authors = ["Owen Griffiths <root@ogriffiths.com>"]
 edition = "2021"
 
 [dependencies]
-axum = "0.4"
+axum = "0.5"
 http = "0.2"
 base64 = "0.13"
