@@ -9,11 +9,15 @@
 //!
 //! That's all there is to it!
 
-#[cfg(not(any(feature="auth-basic", feature="auth-bearer")))]
+#[cfg(not(any(feature = "auth-basic", feature = "auth-bearer")))]
 compile_error!(r#"At least one feature must be enabled!"#);
 
-#[cfg(feature="auth-basic")] mod auth_basic;
-#[cfg(feature="auth-bearer")] mod auth_bearer;
+#[cfg(feature = "auth-basic")]
+mod auth_basic;
+#[cfg(feature = "auth-bearer")]
+mod auth_bearer;
 
-#[cfg(feature="auth-basic")] pub use auth_basic::AuthBasic;
-#[cfg(feature="auth-bearer")] pub use auth_bearer::AuthBearer;
+#[cfg(feature = "auth-basic")]
+pub use auth_basic::AuthBasic;
+#[cfg(feature = "auth-bearer")]
+pub use auth_bearer::AuthBearer;
