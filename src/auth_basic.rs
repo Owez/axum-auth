@@ -9,6 +9,8 @@ use http::{header::AUTHORIZATION, StatusCode};
 /// Though this structure can be used like any other [axum] extractor, we recommend this pattern:
 ///
 /// ```no_run
+/// use axum_auth::AuthBasic;
+/// 
 /// /// Takes basic auth details and shows a message
 /// async fn handler(AuthBasic((id, password)): AuthBasic) -> String {
 ///     if let Some(password) = password {
