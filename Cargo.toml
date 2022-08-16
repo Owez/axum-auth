@@ -13,9 +13,10 @@ all-features = true
 rustdoc-args = ["--cfg", "docsrs"]
 
 [dependencies]
-axum = "0.5"
-http = "0.2"
+async-trait = "0.1.57"
+axum-core = "0.2.7"
 base64 = "0.13"
+http = "0.2"
 
 [features]
 auth-basic = []

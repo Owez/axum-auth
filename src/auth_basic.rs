@@ -1,5 +1,5 @@
-use axum::async_trait;
-use axum::extract::{FromRequest, RequestParts};
+use async_trait::async_trait;
+use axum_core::extract::{FromRequest, RequestParts};
 use http::{header::AUTHORIZATION, StatusCode};
 
 /// Basic authentication extractor, containing an identifier as well as an optional password

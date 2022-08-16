@@ -1,5 +1,5 @@
-use axum::async_trait;
-use axum::extract::{FromRequest, RequestParts};
+use async_trait::async_trait;
+use axum_core::extract::{FromRequest, RequestParts};
 use http::{header::AUTHORIZATION, StatusCode};
 
 /// Bearer token extractor which contains the innards of a bearer header as a string
