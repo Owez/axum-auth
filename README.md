@@ -41,6 +41,13 @@ Simply place the following inside of your `Cargo.toml` file for Axum 0.5:
 axum-auth = "0.2"
 ```
 
+You can enable just basic/bearer auth via features. To enable just basic auth, you can add this to the `Cargo.toml` file instead:
+
+```toml
+[dependencies]
+axum-auth = { version = "0.3", default-features = false, features = ["auth-basic"] }
+```
+
 ## Security
 
 Some essential security considerations to take into account are the following:

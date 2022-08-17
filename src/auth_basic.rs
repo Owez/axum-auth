@@ -4,13 +4,15 @@ use http::{header::AUTHORIZATION, StatusCode};
 
 /// Basic authentication extractor, containing an identifier as well as an optional password
 ///
+/// This is enabled via the `auth-basic` feature.
+///
 /// # Example
 ///
 /// Though this structure can be used like any other [axum] extractor, we recommend this pattern:
 ///
 /// ```no_run
 /// use axum_auth::AuthBasic;
-/// 
+///
 /// /// Takes basic auth details and shows a message
 /// async fn handler(AuthBasic((id, password)): AuthBasic) -> String {
 ///     if let Some(password) = password {
@@ -25,7 +27,7 @@ use http::{header::AUTHORIZATION, StatusCode};
 ///
 /// This extractor will give off a few different errors depending on what when wrong with a request's header. These errors include:
 ///
-/// - COMING SOON
+/// - TODO
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct AuthBasic(pub (String, Option<String>));
 

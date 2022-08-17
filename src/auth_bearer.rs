@@ -4,6 +4,8 @@ use http::{header::AUTHORIZATION, StatusCode};
 
 /// Bearer token extractor which contains the innards of a bearer header as a string
 ///
+/// This is enabled via the `auth-bearer` feature.
+/// 
 /// # Example
 ///
 /// This structure can be used like any other [axum] extractor:
