@@ -1,4 +1,4 @@
-# Axum Auth
+# Auth for axum
 
 High-level [http auth](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication) extractors for [axum](https://github.com/tokio-rs/axum)
 
@@ -34,14 +34,14 @@ Check out the [crate documentation](https://docs.rs/axum-auth) for more in-depth
 
 ## Installation
 
-Simply place the following inside of your `Cargo.toml` file for Axum 0.6:
+Simply place the following inside of your `Cargo.toml` file for axum 0.6:
 
 ```toml
 [dependencies]
 axum-auth = "0.4"
 ```
 
-If you're still on Axum 0.5, you can use the `0.3` version. You can also enable just basic/bearer auth via features. To enable just basic auth, you can add this to the `Cargo.toml` file instead:
+If you're still on axum 0.5, you can use the `0.3` version. You can also enable just basic/bearer auth via features. To enable just basic auth, you can add this to the `Cargo.toml` file instead:
 
 ```toml
 [dependencies]

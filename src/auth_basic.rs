@@ -1,6 +1,11 @@
+//! Implementation of http basic authentication
+//!
+//! See [AuthBasic] for the most commonly-used data structure
+
+use crate::{get_header, DecodeRequestParts, Rejection, ERR_DECODE, ERR_WRONG_BASIC};
 use async_trait::async_trait;
 use axum_core::extract::FromRequestParts;
-use http::{header::AUTHORIZATION, request::Parts, StatusCode};
+use http::{request::Parts, StatusCode};
 
 /// Basic authentication extractor, containing an identifier as well as an optional password
 ///
@@ -22,12 +27,7 @@ use http::{header::AUTHORIZATION, request::Parts, StatusCode};
 ///     }
 /// }
 /// ```
-///
-/// # Errors
-///
-/// This extractor will give off a few different errors depending on what when wrong with a request's header. These errors include:
-///
-/// - TODO
+// TODO: errors
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct AuthBasic(pub (String, Option<String>));
 
@@ -36,44 +36,35 @@ impl<B> FromRequestParts<B> for AuthBasic
 where
     B: Send + Sync,
 {
-    type Rejection = (StatusCode, &'static str);
+    type Rejection = Rejection;
 
     async fn from_request_parts(parts: &mut Parts, _: &B) -> Result<Self, Self::Rejection> {
-        // Get authorisation header
-        let authorisation = parts
-            .headers
-            .get(AUTHORIZATION)
-            .ok_or((StatusCode::BAD_REQUEST, "`Authorization` header is missing"))?
-            .to_str()
-            .map_err(|_| {
-                (
-                    StatusCode::BAD_REQUEST,
-                    "`Authorization` header contains invalid characters",
-                )
-            })?;
+        Self::decode_request_parts(parts, StatusCode::BAD_REQUEST)
+    }
+}
 
-        // Check that its a well-formed basic auth then decode and return
-        let split = authorisation.split_once(' ');
+impl DecodeRequestParts for AuthBasic {
+    fn decode_request_parts(parts: &mut Parts, err_code: StatusCode) -> Result<Self, Rejection> {
+        // Get authorization header
+        let authorization = get_header(parts, err_code)?;
+
+        // Check that its well-formed basic auth then decode and return
+        let split = authorization.split_once(' ');
         match split {
-            Some((name, contents)) if name == "Basic" => decode_basic(contents),
-            _ => Err((
-                StatusCode::BAD_REQUEST,
-                "`Authorization` header must be for basic authentication",
-            )),
+            Some((name, contents)) if name == "Basic" => decode(contents, (err_code, ERR_DECODE)),
+            _ => Err((err_code, ERR_WRONG_BASIC)),
         }
     }
 }
 
-/// Decodes basic auth, returning the full tuple if present
-fn decode_basic(input: &str) -> Result<AuthBasic, (StatusCode, &'static str)> {
-    const ERR: (StatusCode, &'static str) = (
-        StatusCode::BAD_REQUEST,
-        "`Authorization` header's basic authentication was improperly encoded",
-    );
-
+/// Decodes the two parts of basic auth using the colon
+fn decode(
+    input: &str,
+    err: (StatusCode, &'static str),
+) -> Result<AuthBasic, (StatusCode, &'static str)> {
     // Decode from base64 into a string
-    let decoded = base64::decode(input).map_err(|_| ERR)?;
-    let decoded = String::from_utf8(decoded).map_err(|_| ERR)?;
+    let decoded = base64::decode(input).map_err(|_| err)?;
+    let decoded = String::from_utf8(decoded).map_err(|_| err)?;
 
     // Return depending on if password is present
     Ok(AuthBasic(
