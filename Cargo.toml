@@ -18,6 +18,11 @@ axum-core = "0.3.0"
 base64 = "0.13"
 http = "0.2"
 
+[dev-dependencies]
+axum = "0.6"
+reqwest = "0.11"
+tokio = { version = "1", features = ["full"] }
+
 [features]
 auth-basic = []
 auth-bearer = []
