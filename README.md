@@ -34,18 +34,18 @@ Check out the [crate documentation](https://docs.rs/axum-auth) for more in-depth
 
 ## Installation
 
-Simply place the following inside of your `Cargo.toml` file for Axum 0.5:
+Simply place the following inside of your `Cargo.toml` file for Axum 0.6:
 
 ```toml
 [dependencies]
-axum-auth = "0.3"
+axum-auth = "0.4"
 ```
 
-You can enable just basic/bearer auth via features. To enable just basic auth, you can add this to the `Cargo.toml` file instead:
+If you're still on Axum 0.5, you can use the `0.3` version. You can also enable just basic/bearer auth via features. To enable just basic auth, you can add this to the `Cargo.toml` file instead:
 
 ```toml
 [dependencies]
-axum-auth = { version = "0.3", default-features = false, features = ["auth-basic"] }
+axum-auth = { version = "0.4", default-features = false, features = ["auth-basic"] }
 ```
 
 ## Security
