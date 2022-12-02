@@ -23,6 +23,13 @@ use http::{header::AUTHORIZATION, request::Parts, StatusCode};
 ///     format!("Found a bearer token: {}", token)
 /// }
 /// ```
+/// 
+/// # Errors
+/// 
+/// There are a few errors which this extractor can make. By default, all invalid responses are `400 BAD REQUEST` with one of these messages:
+/// - \`Authorization\` header must be a bearer token – Somebody tried to but basic auth here instead of bearer
+/// - \`Authorization\` header is missing – The header was required but it wasn't found
+/// - \`Authorization\` header contains invalid characters – The header couldn't be processed because of invalid characters
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct AuthBearer(pub String);
 
@@ -51,7 +58,11 @@ impl DecodeRequestParts for AuthBearer {
         // Check that its a well-formed bearer and return
         let split = authorization.split_once(' ');
         match split {
+            // Found proper bearer
             Some((name, contents)) if name == "Bearer" => Ok(Self(contents.to_string())),
+            // Found empty bearer; sometimes request libraries format them as this
+            _ if authorization == "Bearer" => Ok(Self(String::new())),
+            // Found nothing
             _ => Err((err_code, ERR_WRONG_BEARER)),
         }
     }

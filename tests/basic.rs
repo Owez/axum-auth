@@ -41,6 +41,7 @@ async fn tester() {
     // Tests
     good().await;
     switched().await;
+    nothing().await;
 }
 
 /// The requests which should be returned fine
@@ -101,4 +102,27 @@ async fn switched() {
     )
 }
 
-// TODO: more
+/// Sees if we can get nothing from basic or bearer successfully
+async fn nothing() {
+    // Try basic
+    let client = reqwest::Client::new();
+    let resp = client
+        .get(url("/basic"))
+        .basic_auth("", Some(""))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(resp.status(), StatusCode::OK);
+    assert_eq!(resp.text().await.unwrap(), String::from("Got  and Some(\"\")"));
+
+    // Try bearer
+    let client = reqwest::Client::new();
+    let resp = client
+        .get(url("/bearer"))
+        .bearer_auth("")
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(resp.status(), StatusCode::OK);
+    assert_eq!(resp.text().await.unwrap(), String::from("Got "))
+}

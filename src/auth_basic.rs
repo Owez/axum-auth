@@ -27,6 +27,14 @@ use http::{request::Parts, StatusCode};
 ///     }
 /// }
 /// ```
+/// 
+/// # Errors
+/// 
+/// There are a few errors which this extractor can make. By default, all invalid responses are `400 BAD REQUEST` with one of these messages:
+/// - \`Authorization\` header could not be decoded – The header couldn't be decoded, probably missing a colon
+/// - \`Authorization\` header must be for basic authentication – Someone tried to use bearer auth instead of basic auth
+/// - \`Authorization\` header is missing – The header was required but it wasn't found
+/// - \`Authorization\` header contains invalid characters – The header couldn't be processed because of invalid characters
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct AuthBasic(pub (String, Option<String>));
 
