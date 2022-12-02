@@ -27,7 +27,6 @@ use http::{request::Parts, StatusCode};
 ///     }
 /// }
 /// ```
-// TODO: errors
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct AuthBasic(pub (String, Option<String>));
 

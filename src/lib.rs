@@ -30,11 +30,11 @@ pub type Rejection = (StatusCode, &'static str);
 /// The header is completely missing
 pub(crate) const ERR_MISSING: &str = "`Authorization` header is missing";
 
-/// The header has some invalid characters in it; TODO
+/// The header has some invalid characters in it
 pub(crate) const ERR_CHARS: &str = "`Authorization` header contains invalid characters";
 
-/// The header couldn't be decoded properly, might not have had a colon in the header
-pub(crate) const ERR_DECODE: &str = "TODO";
+/// The header couldn't be decoded properly for basic auth, might not have had a colon in the header
+pub(crate) const ERR_DECODE: &str = "`Authorization` header could not be decoded";
 
 /// The header was set as bearer authentication when we're expecting basic
 pub(crate) const ERR_WRONG_BASIC: &str = "`Authorization` header must be for basic authentication";

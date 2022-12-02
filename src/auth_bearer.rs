@@ -23,7 +23,6 @@ use http::{header::AUTHORIZATION, request::Parts, StatusCode};
 ///     format!("Found a bearer token: {}", token)
 /// }
 /// ```
-// TODO: errors
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct AuthBearer(pub String);
 
