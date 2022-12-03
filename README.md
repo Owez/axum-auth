@@ -30,7 +30,7 @@ async fn handler(AuthBasic((id, password)): AuthBasic) -> String {
 }
 ```
 
-Check out the [crate documentation](https://docs.rs/axum-auth) for more in-depth information into how both of these methods work!
+You can also define custom extractors, letting you return custom extractors, status codes, and messages to users if the auth fails. Check out the [crate documentation](https://docs.rs/axum-auth) for more in-depth information into how everything works!
 
 ## Installation
 

@@ -113,7 +113,10 @@ async fn nothing() {
         .await
         .unwrap();
     assert_eq!(resp.status(), StatusCode::OK);
-    assert_eq!(resp.text().await.unwrap(), String::from("Got  and Some(\"\")"));
+    assert_eq!(
+        resp.text().await.unwrap(),
+        String::from("Got  and Some(\"\")")
+    );
 
     // Try bearer
     let client = reqwest::Client::new();

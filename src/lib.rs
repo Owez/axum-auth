@@ -2,12 +2,17 @@
 //!
 //! # Usage
 //!
-//! Check out the following structures for more item-level documentation:
+//! Check out the following structures:
 //!
-//! - Basic auth: [AuthBasic]
-//! - Bearer auth: [AuthBearer]
+//! - **Basic auth: [AuthBasic]**
+//! - **Bearer auth: [AuthBearer]**
+//! 
+//! If you need to implement custom errors (i.e., status codes and messages), use these:
+//! 
+//! - Custom basic auth: [AuthBasicCustom]
+//! - Custom basic auth: [AuthBearerCustom]
 //!
-//! That's all there is to it! Check our the [repository](https://github.com/owez/axum-auth) for contributing or some more documentation.
+//! That's all there is to it! Check out the [repository](https://github.com/owez/axum-auth) for contributing or some more documentation.
 
 #[cfg(not(any(feature = "auth-basic", feature = "auth-bearer")))]
 compile_error!(r#"At least one feature must be enabled!"#);
@@ -18,14 +23,17 @@ mod auth_basic;
 mod auth_bearer;
 
 #[cfg(feature = "auth-basic")]
-pub use auth_basic::AuthBasic;
+pub use auth_basic::{AuthBasic,AuthBasicCustom};
 #[cfg(feature = "auth-bearer")]
-pub use auth_bearer::AuthBearer;
+pub use auth_bearer::{AuthBearer,AuthBearerCustom};
 
 use http::{header::AUTHORIZATION, request::Parts, StatusCode};
 
-/// Rejection error used in the [AuthBasicCustom] or [AuthBearerCustom] extractors
+/// Rejection error used in the [AuthBasicCustom] and [AuthBearerCustom] extractors
 pub type Rejection = (StatusCode, &'static str);
+
+/// Default error status code used for the basic extractors
+pub(crate) const ERR_DEFAULT: StatusCode = StatusCode::BAD_REQUEST;
 
 /// The header is completely missing
 pub(crate) const ERR_MISSING: &str = "`Authorization` header is missing";
