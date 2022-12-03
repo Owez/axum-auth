@@ -167,8 +167,8 @@ pub trait AuthBasicCustom: Sized {
 /// Decodes the two parts of basic auth using the colon
 fn decode(
     input: &str,
-    err: (StatusCode, &'static str),
-) -> Result<(String, Option<String>), (StatusCode, &'static str)> {
+    err: Rejection,
+) -> Result<(String, Option<String>), Rejection> {
     // Decode from base64 into a string
     let decoded = base64::decode(input).map_err(|_| err)?;
     let decoded = String::from_utf8(decoded).map_err(|_| err)?;
