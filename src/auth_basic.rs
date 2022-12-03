@@ -113,7 +113,7 @@ impl AuthBasicCustom for AuthBasic {
 ///
 /// Some notes about this example for some more insight:
 ///
-/// - There's no reason for the `FromRequestParts` to ever change out of this pattern unless you're doing something special
+/// - There's no reason for the [FromRequestParts] to ever change out of this pattern unless you're doing something special
 /// - It's recommended to use the `struct BasicExample((String, Option<String>));` pattern because it makes using it from routes easy
 pub trait AuthBasicCustom: Sized {
     /// Error code to use instead of the typical `400 BAD REQUEST` error
