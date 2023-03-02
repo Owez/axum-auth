@@ -10,7 +10,7 @@
 //! If you need to implement custom errors (i.e., status codes and messages), use these:
 //! 
 //! - Custom basic auth: [AuthBasicCustom]
-//! - Custom basic auth: [AuthBearerCustom]
+//! - Custom bearer auth: [AuthBearerCustom]
 //!
 //! That's all there is to it! Check out the [repository](https://github.com/owez/axum-auth) for contributing or some more documentation.
 
