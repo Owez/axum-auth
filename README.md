@@ -2,6 +2,8 @@
 
 High-level [http auth](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication) extractors for [axum](https://github.com/tokio-rs/axum)
 
+🚨 This crate provides an alternative to `TypedHeader<Authorization<Bearer>>`/`TypedHeader<Authorization<Basic>>` which you should probably use instead. Take a look at the fantastic [axum-login](https://github.com/maxcountryman/axum-login) crate if your looking for more complicated session management. I will continue to maintain this crate for the forseeable future.
+
 ## Usage
 
 Bearer Authentication:
