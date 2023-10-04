@@ -1,14 +1,16 @@
 //! High-level [http auth](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication) extractors for [axum](https://github.com/tokio-rs/axum)
 //!
+//! 🚨 This crate provides an alternative to `TypedHeader<Authorization<..>>` which you should probably [use](https://docs.rs/axum/latest/axum/struct.TypedHeader.html) instead. Take a look at the fantastic [axum-login](https://github.com/maxcountryman/axum-login) crate if your looking for more robust session management. I will continue to maintain this crate.
+//!
 //! # Usage
 //!
-//! Check out the following structures:
+//! Take a look at the following structures:
 //!
 //! - **Basic auth: [AuthBasic]**
 //! - **Bearer auth: [AuthBearer]**
-//! 
+//!
 //! If you need to implement custom errors (i.e., status codes and messages), use these:
-//! 
+//!
 //! - Custom basic auth: [AuthBasicCustom]
 //! - Custom bearer auth: [AuthBearerCustom]
 //!
@@ -23,9 +25,9 @@ mod auth_basic;
 mod auth_bearer;
 
 #[cfg(feature = "auth-basic")]
-pub use auth_basic::{AuthBasic,AuthBasicCustom};
+pub use auth_basic::{AuthBasic, AuthBasicCustom};
 #[cfg(feature = "auth-bearer")]
-pub use auth_bearer::{AuthBearer,AuthBearerCustom};
+pub use auth_bearer::{AuthBearer, AuthBearerCustom};
 
 use http::{header::AUTHORIZATION, request::Parts, StatusCode};
 
