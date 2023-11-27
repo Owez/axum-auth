@@ -1,7 +1,7 @@
 [package]
 name = "axum-auth"
 description = "High-level http auth extractors for axum"
-version = "0.4.1"
+version = "0.5.0"
 readme = "README.md"
 repository = "https://github.com/owez/axum-auth"
 license = "MIT OR Apache-2.0"
@@ -14,12 +14,13 @@ rustdoc-args = ["--cfg", "docsrs"]
 
 [dependencies]
 async-trait = "0.1.73"
-axum-core = "0.3"
-base64 = "0.13"
-http = "0.2"
+axum = "0.7"
+axum-core = "0.4"
+base64 = "0.21"
+http = "1"
 
 [dev-dependencies]
-axum = "0.6"
+axum = "0.7"
 reqwest = "0.11"
 tokio = { version = "1", features = ["full"] }
 
