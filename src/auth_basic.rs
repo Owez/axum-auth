@@ -5,6 +5,7 @@
 use crate::{get_header, Rejection, ERR_DECODE, ERR_DEFAULT, ERR_WRONG_BASIC};
 use async_trait::async_trait;
 use axum_core::extract::FromRequestParts;
+use base64::Engine;
 use http::{request::Parts, StatusCode};
 
 /// Basic authentication extractor, containing an identifier as well as an optional password
@@ -167,7 +168,9 @@ pub trait AuthBasicCustom: Sized {
 /// Decodes the two parts of basic auth using the colon
 fn decode(input: &str, err: Rejection) -> Result<(String, Option<String>), Rejection> {
     // Decode from base64 into a string
-    let decoded = base64::decode(input).map_err(|_| err)?;
+    let decoded = base64::engine::general_purpose::STANDARD
+        .decode(input)
+        .map_err(|_| err)?;
     let decoded = String::from_utf8(decoded).map_err(|_| err)?;
 
     // Return depending on if password is present
