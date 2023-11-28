@@ -2,7 +2,7 @@
 
 High-level [http auth](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication) extractors for [axum](https://github.com/tokio-rs/axum)
 
-🚨 This crate provides an alternative to `TypedHeader<Authorization<..>>` which you should probably [use](https://docs.rs/axum/latest/axum/struct.TypedHeader.html) instead. Take a look at the fantastic [axum-login](https://github.com/maxcountryman/axum-login) crate if your looking for more robust session management. I will continue to maintain this crate.
+🚨 This crate provides an alternative to `TypedHeader<Authorization<..>>` which you may [use](https://docs.rs/axum-extra/latest/axum_extra/struct.TypedHeader.html) instead. Take a look at the fantastic [axum-login](https://github.com/maxcountryman/axum-login) crate if your looking for more robust session management. I will continue to maintain this crate.
 
 ## Usage
 
@@ -36,19 +36,21 @@ You can also define custom extractors, letting you return custom extractors, sta
 
 ## Installation
 
-Simply place the following inside of your `Cargo.toml` file for axum 0.6:
+Simply place the following inside of your `Cargo.toml` file for axum:
 
 ```toml
 [dependencies]
-axum-auth = "0.4"
+axum-auth = "0.7"
 ```
 
-If you're still on axum 0.5, you can use the `0.3` version. You can also enable just basic/bearer auth via features. To enable just basic auth, you can add this to the `Cargo.toml` file instead:
+Our version follows axum since 0.7. You can also enable just basic/bearer auth via features. To enable just basic auth, you can add this to the `Cargo.toml` file instead:
 
 ```toml
 [dependencies]
-axum-auth = { version = "0.4", default-features = false, features = ["auth-basic"] }
+axum-auth = { version = "0.7", default-features = false, features = ["auth-basic"] }
 ```
+
+If you're still using axum 0.5, use version 0.3. If you're still using axum 0.6, use version 0.5.
 
 ## Security
 
