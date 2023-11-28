@@ -1,8 +1,10 @@
 use async_trait::async_trait;
 use axum::{extract::FromRequestParts, routing::get, Router};
 use axum_auth::{AuthBasicCustom, AuthBearerCustom, Rejection};
-use http::{request::Parts, StatusCode};
+use http::request::Parts;
 use std::net::SocketAddr;
+use http::StatusCode;
+use tokio::net::TcpListener;
 
 struct MyCustomBasic((String, Option<String>));
 
@@ -59,8 +61,10 @@ async fn launcher() {
 
     // Launch
     let addr = SocketAddr::from(([127, 0, 0, 1], 3001));
-    axum::Server::bind(&addr)
-        .serve(app.into_make_service())
+    axum::serve(
+        TcpListener::bind(addr).await.unwrap(),
+        app.into_make_service(),
+    )
         .await
         .unwrap();
 
@@ -92,7 +96,7 @@ async fn tester() {
         .send()
         .await
         .unwrap();
-    assert_eq!(resp.status(), StatusCode::IM_A_TEAPOT);
+    assert_eq!(resp.status().as_u16(), StatusCode::IM_A_TEAPOT);
     assert_eq!(
         resp.text().await.unwrap(),
         String::from("`Authorization` header must be for basic authentication")
@@ -106,7 +110,7 @@ async fn tester() {
         .send()
         .await
         .unwrap();
-    assert_eq!(resp.status(), StatusCode::IM_A_TEAPOT);
+    assert_eq!(resp.status().as_u16(), StatusCode::IM_A_TEAPOT);
     assert_eq!(
         resp.text().await.unwrap(),
         String::from("`Authorization` header must be a bearer token")

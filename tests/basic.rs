@@ -2,6 +2,7 @@ use axum::{routing::get, Router};
 use axum_auth::{AuthBasic, AuthBearer};
 use http::StatusCode;
 use std::net::SocketAddr;
+use tokio::net::TcpListener;
 
 /// Launches spin-off axum instance
 async fn launcher() {
@@ -12,8 +13,11 @@ async fn launcher() {
 
     // Launch
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
-    axum::Server::bind(&addr)
-        .serve(app.into_make_service())
+
+    axum::serve(
+        TcpListener::bind(addr).await.unwrap(),
+        app.into_make_service(),
+    )
         .await
         .unwrap();
 
@@ -54,7 +58,7 @@ async fn good() {
         .send()
         .await
         .unwrap();
-    assert_eq!(resp.status(), StatusCode::OK);
+    assert_eq!(resp.status().as_u16(), StatusCode::OK);
     assert_eq!(
         resp.text().await.unwrap(),
         String::from("Got My Username and Some(\"My Password\")")
@@ -68,7 +72,7 @@ async fn good() {
         .send()
         .await
         .unwrap();
-    assert_eq!(resp.status(), StatusCode::OK);
+    assert_eq!(resp.status().as_u16(), StatusCode::OK);
     assert_eq!(resp.text().await.unwrap(), String::from("Got My Token"))
 }
 
@@ -81,7 +85,7 @@ async fn switched() {
         .send()
         .await
         .unwrap();
-    assert_eq!(resp.status(), StatusCode::BAD_REQUEST);
+    assert_eq!(resp.status().as_u16(), StatusCode::BAD_REQUEST);
     assert_eq!(
         resp.text().await.unwrap(),
         String::from("`Authorization` header must be for basic authentication")
@@ -95,7 +99,7 @@ async fn switched() {
         .send()
         .await
         .unwrap();
-    assert_eq!(resp.status(), StatusCode::BAD_REQUEST);
+    assert_eq!(resp.status().as_u16(), StatusCode::BAD_REQUEST);
     assert_eq!(
         resp.text().await.unwrap(),
         String::from("`Authorization` header must be a bearer token")
@@ -112,7 +116,7 @@ async fn nothing() {
         .send()
         .await
         .unwrap();
-    assert_eq!(resp.status(), StatusCode::OK);
+    assert_eq!(resp.status().as_u16(), StatusCode::OK);
     assert_eq!(
         resp.text().await.unwrap(),
         String::from("Got  and Some(\"\")")
@@ -126,6 +130,6 @@ async fn nothing() {
         .send()
         .await
         .unwrap();
-    assert_eq!(resp.status(), StatusCode::OK);
+    assert_eq!(resp.status().as_u16(), StatusCode::OK);
     assert_eq!(resp.text().await.unwrap(), String::from("Got "))
 }
