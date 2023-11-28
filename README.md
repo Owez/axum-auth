@@ -50,7 +50,7 @@ Our version follows axum since 0.7. You can also enable just basic/bearer auth v
 axum-auth = { version = "0.7", default-features = false, features = ["auth-basic"] }
 ```
 
-If you're still using axum 0.5, use version 0.3. If you're still using axum 0.6, use version 0.5.
+If you're still using axum 0.5, use version 0.3. If you're still using axum 0.6, use version 0.4.
 
 ## Security
 
