@@ -61,7 +61,7 @@ pub(crate) trait DecodeRequestParts: Sized {
 }
 
 /// Gets the auth header from [Parts] of the request or errors with [ERR_CHARS] or [ERR_MISSING] if wrong
-pub(crate) fn get_header(parts: &mut Parts, err_code: StatusCode) -> Result<&str, Rejection> {
+pub(crate) fn get_header(parts: &Parts, err_code: StatusCode) -> Result<&str, Rejection> {
     parts
         .headers
         .get(AUTHORIZATION)

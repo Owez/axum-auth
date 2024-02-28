@@ -37,8 +37,18 @@ use http::{request::Parts, StatusCode};
 /// - \`Authorization\` header must be for basic authentication – Someone tried to use bearer auth instead of basic auth
 /// - \`Authorization\` header is missing – The header was required but it wasn't found
 /// - \`Authorization\` header contains invalid characters – The header couldn't be processed because of invalid characters
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(PartialEq, Eq, Clone)]
 pub struct AuthBasic(pub (String, Option<String>));
+
+/// Manually implement Debug for AuthBasic to prevent password from being accidentally printed
+impl std::fmt::Debug for AuthBasic {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("AuthBasic")
+            .field("id", &self.0 .0)
+            .field("password", &"********")
+            .finish()
+    }
+}
 
 #[async_trait]
 impl<B> FromRequestParts<B> for AuthBasic
