@@ -1,8 +1,6 @@
 use axum::{routing::get, Router};
 use axum_auth::{AuthBasic, AuthBearer};
 use http::StatusCode;
-use std::net::SocketAddr;
-use tokio::net::TcpListener;
 
 /// Launches spin-off axum instance
 async fn launcher() {
@@ -12,13 +10,14 @@ async fn launcher() {
         .route("/bearer", get(auth_bearer));
 
     // Launch
-    let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
-    axum::serve(
-        TcpListener::bind(addr).await.unwrap(),
-        app.into_make_service(),
-    )
-    .await
-    .unwrap();
+    let listener = tokio::net::TcpListener::bind("127.0.0.1:3000")
+        .await
+        .unwrap();
+
+    println!("listening on {}", listener.local_addr().unwrap());
+    axum::serve(listener, app.into_make_service())
+        .await
+        .unwrap();
 
     async fn tester_basic(AuthBasic((id, password)): AuthBasic) -> String {
         format!("Got {} and {:?}", id, password)

@@ -1,9 +1,6 @@
-use async_trait::async_trait;
 use axum::{extract::FromRequestParts, routing::get, Router};
 use axum_auth::{AuthBasicCustom, AuthBearerCustom, Rejection};
 use http::{request::Parts, StatusCode};
-use tokio::net::TcpListener;
-use std::net::SocketAddr;
 
 struct MyCustomBasic((String, Option<String>));
 
@@ -16,7 +13,6 @@ impl AuthBasicCustom for MyCustomBasic {
     }
 }
 
-#[async_trait]
 impl<B> FromRequestParts<B> for MyCustomBasic
 where
     B: Send + Sync,
@@ -39,7 +35,6 @@ impl AuthBearerCustom for MyCustomBearer {
     }
 }
 
-#[async_trait]
 impl<B> FromRequestParts<B> for MyCustomBearer
 where
     B: Send + Sync,
@@ -59,13 +54,14 @@ async fn launcher() {
         .route("/bearer", get(auth_bearer));
 
     // Launch
-    let addr = SocketAddr::from(([127, 0, 0, 1], 3001));
-    axum::serve(
-        TcpListener::bind(addr).await.unwrap(),
-        app.into_make_service(),
-    )
-    .await
-    .unwrap();
+    let listener = tokio::net::TcpListener::bind("127.0.0.1:3001")
+        .await
+        .unwrap();
+
+    println!("listening on {}", listener.local_addr().unwrap());
+    axum::serve(listener, app.into_make_service())
+        .await
+        .unwrap();
 
     async fn tester_basic(MyCustomBasic((id, password)): MyCustomBasic) -> String {
         format!("Got {} and {:?}", id, password)
