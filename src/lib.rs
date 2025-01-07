@@ -52,6 +52,7 @@ pub(crate) const ERR_WRONG_BASIC: &str = "`Authorization` header must be for bas
 /// The header was set as basic authentication when we're expecting bearer
 pub(crate) const ERR_WRONG_BEARER: &str = "`Authorization` header must be a bearer token";
 
+#[allow(dead_code)]
 /// Helper trait for decoding [Parts] to a final extractor; this is the main interface into the decoding system
 pub(crate) trait DecodeRequestParts: Sized {
     /// Decodes all provided [Parts] into a new instance of self, going through the entire decoding cycle

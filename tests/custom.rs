@@ -1,4 +1,3 @@
-use async_trait::async_trait;
 use axum::{extract::FromRequestParts, routing::get, Router};
 use axum_auth::{AuthBasicCustom, AuthBearerCustom, Rejection};
 use http::{request::Parts, StatusCode};
@@ -16,7 +15,6 @@ impl AuthBasicCustom for MyCustomBasic {
     }
 }
 
-#[async_trait]
 impl<B> FromRequestParts<B> for MyCustomBasic
 where
     B: Send + Sync,
@@ -39,7 +37,6 @@ impl AuthBearerCustom for MyCustomBearer {
     }
 }
 
-#[async_trait]
 impl<B> FromRequestParts<B> for MyCustomBearer
 where
     B: Send + Sync,

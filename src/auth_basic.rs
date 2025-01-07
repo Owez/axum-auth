@@ -3,7 +3,6 @@
 //! See [AuthBasic] for the most commonly-used data structure
 
 use crate::{get_header, Rejection, ERR_DECODE, ERR_DEFAULT, ERR_WRONG_BASIC};
-use async_trait::async_trait;
 use axum_core::extract::FromRequestParts;
 use base64::Engine;
 use http::{request::Parts, StatusCode};
@@ -40,7 +39,6 @@ use http::{request::Parts, StatusCode};
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct AuthBasic(pub (String, Option<String>));
 
-#[async_trait]
 impl<B> FromRequestParts<B> for AuthBasic
 where
     B: Send + Sync,
@@ -83,7 +81,6 @@ impl AuthBasicCustom for AuthBasic {
 /// use axum_auth::{AuthBasicCustom, Rejection};
 /// use http::{request::Parts, StatusCode};
 /// use axum::extract::FromRequestParts;
-/// use async_trait::async_trait;
 ///
 /// /// Your custom basic auth returning a fun 418 for errors
 /// struct MyCustomBasicAuth((String, Option<String>));
@@ -99,7 +96,6 @@ impl AuthBasicCustom for AuthBasic {
 /// }
 ///
 /// // this is just boilerplate, copy-paste this
-/// #[async_trait]
 /// impl<B> FromRequestParts<B> for MyCustomBasicAuth
 /// where
 ///     B: Send + Sync,
