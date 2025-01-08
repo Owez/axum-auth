@@ -3,7 +3,6 @@
 //! See [AuthBearer] for the most commonly-used data structure
 
 use crate::{Rejection, ERR_CHARS, ERR_DEFAULT, ERR_MISSING, ERR_WRONG_BEARER};
-use async_trait::async_trait;
 use axum_core::extract::FromRequestParts;
 use http::{header::AUTHORIZATION, request::Parts, StatusCode};
 
@@ -34,7 +33,6 @@ use http::{header::AUTHORIZATION, request::Parts, StatusCode};
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct AuthBearer(pub String);
 
-#[async_trait]
 impl<B> FromRequestParts<B> for AuthBearer
 where
     B: Send + Sync,
