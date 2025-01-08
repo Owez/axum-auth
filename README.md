@@ -40,14 +40,14 @@ Simply place the following inside of your `Cargo.toml` file for axum:
 
 ```toml
 [dependencies]
-axum-auth = "0.7"
+axum-auth = "0.8"
 ```
 
 Our version follows axum since 0.7. You can also enable just basic/bearer auth via features. To enable just basic auth, you can add this to the `Cargo.toml` file instead:
 
 ```toml
 [dependencies]
-axum-auth = { version = "0.7", default-features = false, features = ["auth-basic"] }
+axum-auth = { version = "0.8", default-features = false, features = ["auth-basic"] }
 ```
 
 If you're still using axum 0.5, use version 0.3. If you're still using axum 0.6, use version 0.4.
