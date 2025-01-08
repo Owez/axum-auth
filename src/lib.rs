@@ -52,13 +52,14 @@ pub(crate) const ERR_WRONG_BASIC: &str = "`Authorization` header must be for bas
 /// The header was set as basic authentication when we're expecting bearer
 pub(crate) const ERR_WRONG_BEARER: &str = "`Authorization` header must be a bearer token";
 
-/// Helper trait for decoding [Parts] to a final extractor; this is the main interface into the decoding system
-pub(crate) trait DecodeRequestParts: Sized {
-    /// Decodes all provided [Parts] into a new instance of self, going through the entire decoding cycle
-    ///
-    /// To add custom errors here internally, set the `err_code` as something different
-    fn decode_request_parts(req: &mut Parts, err_code: StatusCode) -> Result<Self, Rejection>;
-}
+// NOTE: Never used as of axum 0.8.0, remove this block in >=0.9.0
+// /// Helper trait for decoding [Parts] to a final extractor; this is the main interface into the decoding system
+// pub(crate) trait DecodeRequestParts: Sized {
+//     /// Decodes all provided [Parts] into a new instance of self, going through the entire decoding cycle
+//     ///
+//     /// To add custom errors here internally, set the `err_code` as something different
+//     fn decode_request_parts(req: &mut Parts, err_code: StatusCode) -> Result<Self, Rejection>;
+// }
 
 /// Gets the auth header from [Parts] of the request or errors with [ERR_CHARS] or [ERR_MISSING] if wrong
 pub(crate) fn get_header(parts: &mut Parts, err_code: StatusCode) -> Result<&str, Rejection> {

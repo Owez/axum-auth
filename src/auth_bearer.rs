@@ -72,7 +72,6 @@ impl AuthBearerCustom for AuthBearer {
 /// This is what a typical custom extractor should look like in full, copy-paste this and edit it:
 ///
 /// ```rust
-/// use async_trait::async_trait;
 /// use axum::extract::FromRequestParts;
 /// use axum_auth::{AuthBearerCustom, Rejection};
 /// use http::{request::Parts, StatusCode};
@@ -80,7 +79,7 @@ impl AuthBearerCustom for AuthBearer {
 /// /// Your custom bearer auth returning a fun 418 for errors
 /// struct MyCustomBearerAuth(String);
 ///
-/// // this is where you define your custom options
+/// // This is where you define your custom options:
 /// impl AuthBearerCustom for MyCustomBearerAuth {
 ///     const ERROR_CODE: StatusCode = StatusCode::IM_A_TEAPOT; // <-- define custom status code here
 ///     const ERROR_OVERWRITE: Option<&'static str> = None; // <-- define overwriting message here
@@ -90,8 +89,7 @@ impl AuthBearerCustom for AuthBearer {
 ///     }
 /// }
 ///
-/// // this is just boilerplate, copy-paste this
-/// #[async_trait]
+/// // This is boilerplate for now, copy and paste this:
 /// impl<B> FromRequestParts<B> for MyCustomBearerAuth
 /// where
 ///     B: Send + Sync,

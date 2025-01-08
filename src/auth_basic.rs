@@ -81,12 +81,11 @@ impl AuthBasicCustom for AuthBasic {
 /// use axum_auth::{AuthBasicCustom, Rejection};
 /// use http::{request::Parts, StatusCode};
 /// use axum::extract::FromRequestParts;
-/// use async_trait::async_trait;
 ///
 /// /// Your custom basic auth returning a fun 418 for errors
 /// struct MyCustomBasicAuth((String, Option<String>));
 ///
-/// // this is where you define your custom options
+/// // This is where you define your custom options:
 /// impl AuthBasicCustom for MyCustomBasicAuth {
 ///     const ERROR_CODE: StatusCode = StatusCode::IM_A_TEAPOT; // <-- define custom status code here
 ///     const ERROR_OVERWRITE: Option<&'static str> = None; // <-- define overwriting message here
@@ -96,8 +95,7 @@ impl AuthBasicCustom for AuthBasic {
 ///     }
 /// }
 ///
-/// // this is just boilerplate, copy-paste this
-/// #[async_trait]
+/// // This is just boilerplate for now, copy and paste this:
 /// impl<B> FromRequestParts<B> for MyCustomBasicAuth
 /// where
 ///     B: Send + Sync,
